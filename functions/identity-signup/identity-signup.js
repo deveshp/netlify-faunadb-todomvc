@@ -9,19 +9,20 @@ const client = new faunadb.Client({
 })
 
 /* create a user in FaunaDB that can connect from the browser */
-function createUser(user, password) {
+function createUser(userData, password) {
   return client.query(q.Create(q.Class("users"), {
     credentials : {
       password : password
     },
     data : {
-      id : user.id,
-      user_metadata : user.user_metadata
+      id : userData.id,
+      user_metadata : userData.user_metadata
     }
   }))
 }
 
 function obtainToken(user, password) {
+  console.log("creating FaunaDB token for " + user)
   return client.query(
     q.Login(user, { password }))
 }
@@ -45,6 +46,14 @@ function handler(event, context, callback) {
           // we discard the credential, and can create a new one if we ever need a new token
           // faunadb_credential : password
         } })
-    }))
+    })).catch((e) => {
+      console.error(e)
+      callback(null, {
+        statusCode: 500,
+        body: JSON.stringify({
+          error: e
+        })
+      })
+    })
 }
 module.exports = {handler: handler};
