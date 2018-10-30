@@ -64,8 +64,8 @@ class Login extends Component {
         this.setState({user: netlifyUser});
       }
     }
-    netlifyIdentity.on("login", (user) => this.setState({user}, saveLogin()));
-    netlifyIdentity.on("logout", (user) => this.setState({user: null}, clearLogin()));
+    netlifyIdentity.on("login", (user) => this.setState({user}, saveLogin ));
+    netlifyIdentity.on("logout", (user) => this.setState({user: null}, clearLogin ));
   }
   authorized(reload) {
     if (reload) {
