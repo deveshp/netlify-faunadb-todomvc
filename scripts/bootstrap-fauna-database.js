@@ -109,8 +109,12 @@ function setupFaunaDB(key) {
     ))
     .then(console.log.bind(console))
     .catch((e) => {
-      console.error(e)
-      throw e
+      if (e.message === 'instance not unique') {
+        console.log("schema already created... skipping");
+      } else {
+        console.error(e)
+        throw e
+      }
     })
 }
 
