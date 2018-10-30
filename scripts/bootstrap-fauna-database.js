@@ -49,10 +49,7 @@ function setupFaunaDB(key) {
 
   client.query(
       q.CreateClass({
-        name: "users",
-        permissions: {
-          create: "public"
-        }
+        name: "users"
       }))
     .then(() => client.query(
       q.Do(
@@ -72,15 +69,12 @@ function setupFaunaDB(key) {
     .then(() => client.query(
       q.Do(
         q.CreateIndex({
-          name: 'users_by_login',
+          name: 'users_by_id',
           source: q.Class("users"),
           terms: [{
-            field: ['data', 'login']
+            field: ['data', 'id']
           }],
-          unique: true,
-          permissions: {
-            read: "public"
-          }
+          unique: true
         }),
         q.CreateIndex({
           // this index is optional but useful in development for browsing users
