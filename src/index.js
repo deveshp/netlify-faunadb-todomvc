@@ -1,12 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+import TodoModel from './TodoModel'
+import 'todomvc-common/base.css';
+import 'todomvc-app-css/index.css';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+var model = new TodoModel('react-todos');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: http://bit.ly/CRA-PWA
-serviceWorker.unregister();
+function render() {
+  ReactDOM.render(
+    <App model={model}/>,
+    document.getElementsByClassName('todoapp')[0]
+  );
+}
+window._model = model;
+model.subscribe(render);
+render();

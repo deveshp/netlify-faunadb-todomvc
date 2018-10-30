@@ -3,18 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "classnames": "^2.2.6",
+    "create-react-class": "^15.6.3",
+    "director": "^1.2.8",
     "faunadb": "^2.5.2",
+    "netlify-identity-widget": "^1.4.14",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",
-    "react-scripts": "2.0.5"
+    "react-scripts": "2.0.5",
+    "todomvc-app-css": "^2.0.0",
+    "todomvc-common": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "npm-run-all --parallel build:**",
     "build:app": "react-scripts build",
     "build:functions": "npm run zip",
-    "zip": "mkdir functions-build && cd functions/identity-signup && npm install && zip -r identity-signup.zip *",
-    "postzip": "mv functions/identity-signup/identity-signup.zip functions-build",
+    "zip": "cd functions/identity-signup && npm install && zip -r identity-signup.zip *",
+    "postzip": "mkdir -p functions-build && mv functions/identity-signup/identity-signup.zip functions-build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
