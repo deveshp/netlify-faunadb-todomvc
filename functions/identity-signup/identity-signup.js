@@ -24,7 +24,7 @@ function createUser(userData, password) {
 function obtainToken(user, password) {
   console.log("creating FaunaDB token for " + user)
   return client.query(
-    q.Login(user, { password }))
+    q.Login(q.Select("ref", user), { password }))
 }
 
 function handler(event, context, callback) {
