@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Router} from 'director';
+import { Router } from 'director/build/director';
 
 import TodoFooter from './Footer';
 import TodoItem from './TodoItem';
