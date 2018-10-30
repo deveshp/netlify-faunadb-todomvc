@@ -47,7 +47,7 @@ function setupFaunaDB(key) {
 
   /* Based on your requirements, change the schema here */
 
-  client.query(
+  return client.query(
       q.CreateClass({
         name: "users"
       }))
