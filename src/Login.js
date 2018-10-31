@@ -16,10 +16,11 @@ function saveLogin() {
      );
      return {app_metadata, created_at, confirmed_at, email, id, user_metadata};
    }
- }
+}
+
 function clearLogin() {
    localStorage.removeItem("faunaNetlifyUser");
- }
+}
 
 class Login extends Component {
   constructor(props) {

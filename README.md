@@ -1,28 +1,24 @@
-# FaunaDB TodoMVC Single Page Application
+# Netlify/FaunaDB TodoMVC Single Page Application
 
 Have you ever wanted the simplest possible backend for your single page applications?
-One you don't have to pay for unless there's traffic to your page, and can stand up
+With multi-cloud powers? One you don't have to pay for unless there's traffic to your page, and can stand up
 to even the most grueling loads. This version of TodoMVC uses [FaunaDB](http://fauna.com)
-to manage login, access control, and storing user data.
+to manage login, access control, and storing user data, and is deployed using Netlify.
+
+Additionally, it demonstrates using Netlify's Identity service and FaunaDB add-on, so you can deploy your own copy of this app with zero configuration. Once you are deployed, you can just replace the code in App.js and TodoModel.js with your own application code, and you'll have a database backed application with user login. Ideal for kicking off your hackday app!
 
 ## Running
 
-Before you can launch the app, you need to create a FaunaDB database and provision
-some access keys. Once the database is set up, you'll run a script to populate the
-schema and access control rules.
+1. Sign up or login to your Netlify account.
+2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
+2. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
+3. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
+4. 
 
-### Setup a free FaunaDB database
 
-FaunaDB is free to use for lightweight development and limited experimentation, so
-get up and running now and you'll be ready to use it for your other projects.
 
-* Sign up for free at https://fauna.com/sign-up
-* You'll be redirected to the dashboard.
-* Create a database, it doesn't matter what you call it.
-* Browse back to your root ("/") database, and then click Manage Keys.
-* Create a key with the `server` role, and paste the secret into `schema.js`
-* Create a key with the `client` role, and paste it into `Login.js`
-* Run `node schema.js` to populate the schema before your first run.
+
+## Developing
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -30,11 +26,19 @@ In the project directory, you can run:
 
 #### `npm start`
 
-Runs the app in the development mode.<br>
+Note you will need to link your app to a Netlify site and enable Identity, as described above. You may need to run this in your console if you have previously linked to a different Netlify site from `localhost:3000`:
+
+```js
+localStorage.removeItem("netlifySiteURL");
+```
+
+Run `npm start` to launch the app in the development mode.<br>
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
+
+
 
 #### `npm test`
 
