@@ -28,22 +28,25 @@ class App extends Component {
         nowShowing: ALL_LISTS,
         editing: null,
         newTodo: '',
-        auth : {}
+        faunadb_token : null
     }
   }
   componentDidMount () {
     var setState = this.setState;
     var router = Router({
-      '/': setState.bind(this, {list : false, nowShowing: ALL_LISTS}),
-      '/list/:listId/': (listId) =>
+      '/': setState.bind(this, {nowShowing: ALL_LISTS}),
+      '/list/:listId/': (listId) => {
         this.props.model.getList(listId)
-        .then(({list}) => this.setState({list, nowShowing: ALL_TODOS})),
-      '/list/:listId/active': (listId) =>
+        this.setState({nowShowing: ALL_TODOS})
+      },
+      '/list/:listId/active': (listId) => {
         this.props.model.getList(listId)
-        .then(({list}) => this.setState({list, nowShowing: ACTIVE_TODOS})),
-      '/list/:listId/completed': (listId) =>
+        this.setState({nowShowing: ACTIVE_TODOS})
+      },
+      '/list/:listId/completed': (listId) =>{
         this.props.model.getList(listId)
-        .then(({list}) => this.setState({list, nowShowing: COMPLETED_TODOS}))
+        this.setState({nowShowing: COMPLETED_TODOS})
+      }
     });
     router.init('/');
   }
@@ -66,14 +69,14 @@ class App extends Component {
       if (this.state.nowShowing === ALL_LISTS) {
         this.props.model.addList(val);
       } else {
-        this.props.model.addTodo(val, this.state.list);
+        this.props.model.addTodo(val, this.props.model.list());
       }
       this.setState({newTodo: ''});
     }
   }
   toggleAll (event) {
     var checked = event.target.checked;
-    this.props.model.toggleAll(checked, this.state.list);
+    this.props.model.toggleAll(checked, this.props.model.list());
   }
   toggle (todoToToggle) {
     this.props.model.toggle(todoToToggle);
@@ -92,11 +95,12 @@ class App extends Component {
     this.setState({editing: null});
   }
   clearCompleted () {
-    this.props.model.clearCompleted(this.state.list);
+    this.props.model.clearCompleted(this.props.model.list());
   }
-  onAuthChange(auth, inform) {
-    this.setState({auth})
-    this.props.model.onAuthChange(auth, inform);
+  onAuthChange(faunadb_token) {
+    console.log("app.js onAuthChange", faunadb_token)
+    this.setState({faunadb_token})
+    this.props.model.onAuthChange(faunadb_token);
   }
   onError(error) {
     this.setState({error})
@@ -114,11 +118,16 @@ class App extends Component {
       main = (
         <section className="main">
           <ul className="todo-list">
-            {lists.map(({data, ref}) => <li key={ref.value} >
-            <label onClick={this.go.bind(this, "/list/"+ref.value.split('/').pop())}>
+            {lists.map(
+              ({data, ref}) => {
+                console.log("list", data, ref)
+                return <li key={ref.value.id} >
+            <label onClick={this.go.bind(this, "/list/"+ref.value.id)}>
               {data.title}
             </label>
-            </li>)}
+            </li>}
+
+          )}
           </ul>
         </section>
       );
@@ -134,10 +143,10 @@ class App extends Component {
         <label>Choose a list.</label>
       </div>
     } else {
-      var todos = this.props.model.todos;
+      var todos = this.props.model.todos();
 
       listNavigator = <div className="listNav">
-        <label>{this.state.list && this.state.list.data.title}</label>
+        <label>{this.props.model.list() && this.props.model.list().data.title}</label>
         <button onClick={this.go.bind(this, "/")}>back to all lists</button>
       </div>
 
@@ -155,7 +164,7 @@ class App extends Component {
       var todoItems = shownTodos.map(function (todo) {
         return (
           <TodoItem
-            key={todo.ref["@ref"]}
+            key={todo.ref.value.id}
             todo={todo.data}
             onToggle={this.toggle.bind(this, todo)}
             onDestroy={this.destroy.bind(this, todo)}
@@ -212,9 +221,9 @@ class App extends Component {
         <ActivityIndicator error={this.state.error} active={this.props.model.active}/>
         <header className="header">
           <h1>todos</h1>
-          <Login model={this.props.model} onError={this.onError.bind(this)} auth={this.state.auth} onAuthChange={this.onAuthChange.bind(this)} />
-          {this.state.auth.faunadb_secret ? listNavigator : ''}
-          {this.state.auth.faunadb_secret ? inputArea : ''}
+          <Login model={this.props.model} onError={this.onError.bind(this)} onAuthChange={this.onAuthChange.bind(this)} />
+          {this.state.faunadb_token ? listNavigator : ''}
+          {this.state.faunadb_token ? inputArea : ''}
         </header>
         {main}
         {footer}

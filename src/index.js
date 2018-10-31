@@ -8,6 +8,7 @@ import 'todomvc-app-css/index.css';
 var model = new TodoModel('react-todos');
 
 function render() {
+  console.log("render callback")
   ReactDOM.render(
     <App model={model}/>,
     document.getElementsByClassName('todoapp')[0]

@@ -6,6 +6,11 @@ var ESCAPE_KEY = 27;
 var ENTER_KEY = 13;
 
 class TodoItem extends Component {
+	constructor(props) {
+    super(props);
+    this.state = {editText: this.props.todo.title}
+  }
+	
 	handleSubmit (event) {
 		var val = this.state.editText.trim();
 		if (val) {
@@ -34,10 +39,6 @@ class TodoItem extends Component {
 		if (this.props.editing) {
 			this.setState({editText: event.target.value});
 		}
-	}
-
-	getInitialState () {
-		return {editText: this.props.todo.title};
 	}
 
 	/**

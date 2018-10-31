@@ -6,57 +6,50 @@ const q = faunadb.query;
 export default class TodoModel {
   constructor(key) {
     this.key = key;
-    this.list = null;
-    this.todos = [];
+    this.listDatas = {};
+    this.listId = null;
+    this.todosData = {};
     this.lists = [];
-    // this.auth = {}
     this.onChanges = [];
-    this.active = false; // todo add observer to client
+  }
+
+  list() {
+    return this.listDatas[this.listId];
+  }
+
+  todos() {
+    return this.todosData[this.listId] || [];
   }
 
   subscribe(onChange) {
     this.onChanges.push(onChange);
   }
 
-  inform(inform = true) {
-    if (inform) {
-      this.getServerLists().then(() => {
-        if (this.list) {
-          return this.getList(this.list.ref.value.split('/').pop())
-        }
-      }).then(() => {
-        this.onChanges.forEach(function(cb) {
-          cb();
-        });
-      });
-    } else {
-      Promise.resolve("ok").then(() => {
-        this.onChanges.forEach(function(cb) {
-          cb();
-        });
-      })
-    }
+  processChanges() {
+    this.onChanges.forEach(function(cb) {
+      cb();
+    });
   }
 
-  onAuthChange(auth, inform) {
-    this.list = null;
-    this.todos = [];
+  inform() {
+    this.getServerLists().then(() => {
+      if (this.listId) {
+        return this.fetchList(this.listId)
+      }
+    }).then(() => this.processChanges())
+  }
+
+  onAuthChange(faunadb_token) {
+    this.listDatas = {};
+    // this.listId = null;
+    this.todosData = {};
     this.lists = [];
     this.client = new faunadb.Client({
-      secret: auth.faunadb_secret
+      secret: faunadb_token
     });
 
-    console.log("onAuthChange", auth, inform);
-
-    if (inform) {
-      this.inform()
-    }
-  }
-
-  isActive(is) {
-    // console.log('isActive', is);
-    this.active = is
-    this.inform(false)
+    console.log("onAuthChange", faunadb_token);
+    this.inform();
   }
 
   getServerLists() {
@@ -89,29 +82,25 @@ export default class TodoModel {
     });
   }
 
-  // getServerTodos() {
-  //   return this.client.query(
-  //     q.Map(
-  //       q.Paginate(
-  //         q.Match(
-  //           q.Ref("indexes/all_todos"))), (ref) => q.Get(ref))).then((r) => {
-  //     console.log("getServerTodos", r)
-  //     this.todos = r.data;
-  //   });
-  // }
-
   getList(id) {
+    this.listId = id;
+    if (this.client) {
+      this.fetchList(id).then(() => this.processChanges())
+    }
+  }
+
+  fetchList(id) {
     // return {list, todos}
     return this.client.query(q.Get(q.Ref("classes/lists/"+id)))
       .then((list) => {
-        // console.log("getList!", list);
-        this.list = list;
+        // console.log("fetchList!", list);
+        this.listDatas[id] = list;
         return this.client.query(q.Map(
           q.Paginate(q.Match(q.Index("todos_by_list"),list.ref)),
           (ref) => q.Get(ref)
         )).then(resp => {
           // console.log("got todos", resp);
-          this.todos = resp.data;
+          this.todosData[id] = resp.data;
           return {list, todos: resp.data}
         })
       });
