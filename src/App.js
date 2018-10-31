@@ -9,18 +9,6 @@ import {ALL_LISTS, ALL_TODOS, ACTIVE_TODOS, COMPLETED_TODOS} from './utils'
 
 const ENTER_KEY = 13;
 
-const ActivityIndicator = (props) => <div style={{
-  color:props.active === "error" ? 'red' : 'white',
-  padding: '12px',
-  float:'right'}}>
-    {props.active ?
-      (props.active === "error" ?
-        "Error" :
-        "Loading...") :
-      ""}
-      {props.error ? JSON.stringify(props.error) : ''}
-  </div>
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -218,7 +206,6 @@ class App extends Component {
     }
     return (
       <div>
-        <ActivityIndicator error={this.state.error} active={this.props.model.active}/>
         <header className="header">
           <h1>todos</h1>
           <Login model={this.props.model} onError={this.onError.bind(this)} onAuthChange={this.onAuthChange.bind(this)} />

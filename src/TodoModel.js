@@ -67,7 +67,7 @@ export default class TodoModel {
         return this.client.query(
           q.Create(q.Class("lists"), {
             data : {
-              title : "Default",
+              title : "Default Todo List",
               owner : q.Select("ref", q.Get(q.Ref("classes/users/self")))
           },
           permissions: {
