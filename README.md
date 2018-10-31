@@ -9,14 +9,19 @@ Additionally, it demonstrates using Netlify's Identity service and FaunaDB add-o
 
 ## Running
 
+Don't skip any steps!
+
 1. Sign up or login to your Netlify account.
 2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
-2. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
-3. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
-4. 
+3. While you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it),
+enable Identity on your app in the Netlify UI.
+4. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
+5. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
+6. Link your checkout to your Netlify site with `netlify link`
+7. Create your FaunaDB database with `netlify addons:create fauna`
+8. Via the Netlify UI, trigger a redeploy.
 
-
-
+When deploy finishes, visit your site via the link on Netlify, and sign up as a user to manage your todo lists and items.
 
 ## Developing
 
