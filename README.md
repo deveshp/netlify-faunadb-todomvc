@@ -28,6 +28,10 @@ The application includes an `identity-signup.js` function which is triggered upo
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
+### Understanding the code
+
+If you wanted to turn this into some other app, you'd replace the code in `src/App.js` and `src/TodoModel.js` with new logic and components. You'd reuse `Login.js`, and you might end up reusing the `inform()` pattern that `TodoModel.js` used to request database updates. The database schema is defined in `scripts/bootstrap-fauna-database.js` so you'd change things there if you wanted to track Recipes or Articles instead of Todos.
+
 #### First: Inside your repo checkout run `npm install`
 
 To start a development server, in the project directory, you can run:
