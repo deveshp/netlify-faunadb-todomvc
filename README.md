@@ -21,9 +21,9 @@ Don't skip any steps! Sometimes a deploy, or the first run of your Identity func
 8. Create your FaunaDB database with `netlify addons:create fauna`
 9. Via the Netlify UI, trigger a redeploy.
 
-When deploy finishes, visit your site (you can find the link on your Netlify dashbaord), and sign up as a user to manage your todo lists and items. The application includes an `identity-signup.js` function which is triggered upon email confirmation to create the FaunaDB user. So click that confirmation link and start using your app.
+When deploy finishes, visit your site (you can find the link on your Netlify dashbaord), and sign up as a user to manage your todo lists and items. (If you upgrade to Netlify's paid Identity service they add the option to login via Facebook, GitHub, etc.)
 
-Any changes you push to your master branch will be automatically deployed.
+The application includes an `identity-signup.js` function which is triggered upon email confirmation to create the FaunaDB user. So click that confirmation link and start using your app. Any changes you push to your master branch will be automatically deployed, thanks Netlify!
 
 ## Developing Locally
 
