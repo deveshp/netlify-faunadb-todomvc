@@ -13,13 +13,12 @@ Don't skip any steps! Sometimes a deploy, or the first run of your Identity func
 
 1. Sign up or login to your Netlify account.
 2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
-3. enable Identity on your app in the Netlify UI, while you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it and redeploy).
+3. Enable Identity on your app in the Netlify UI, while you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it and redeploy).
 4. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
 5. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
-6. Inside your repo checkout run `npm install`
-7. Link your checkout to your Netlify site with `netlify link` and selecting the default option.
-8. Create your FaunaDB database with `netlify addons:create fauna`
-9. Via the Netlify UI, trigger a redeploy.
+6. Link your checkout to your Netlify site with `netlify link` and selecting the default option.
+7. Create your FaunaDB database with `netlify addons:create fauna`
+8. Via the Netlify UI, trigger a redeploy.
 
 When deploy finishes, visit your site (you can find the link on your Netlify dashbaord), and sign up as a user to manage your todo lists and items. (If you upgrade to Netlify's paid Identity service they add the option to login via Facebook, GitHub, etc.)
 
@@ -29,7 +28,9 @@ The application includes an `identity-signup.js` function which is triggered upo
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
-In the project directory, you can run:
+#### First: Inside your repo checkout run `npm install`
+
+To start a development server, in the project directory, you can run:
 
 #### `npm start`
 
