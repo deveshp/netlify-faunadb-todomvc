@@ -5,25 +5,27 @@ With multi-cloud powers? One you don't have to pay for unless there's traffic to
 to even the most grueling loads. This version of TodoMVC uses [FaunaDB](http://fauna.com)
 to manage login, access control, and storing user data, and is deployed using Netlify.
 
-Additionally, it demonstrates using Netlify's Identity service and FaunaDB add-on, so you can deploy your own copy of this app with zero configuration. Once you are deployed, you can just replace the code in App.js and TodoModel.js with your own application code, and you'll have a database backed application with user login. Ideal for kicking off your hackday app!
+Additionally, it demonstrates using Netlify's Identity service and FaunaDB add-on, so you can deploy your own copy of this app with zero configuration. Once you are deployed, you can just replace some code with your own application code, and you'll have a database backed single page web app with user login. Ideal for kicking off your hackday app!
 
 ## Running
 
-Don't skip any steps!
+Don't skip any steps! Sometimes a deploy, or the first run of your Identity function, might take a few seconds. Don't despair, this flow is well tested and ought to just work. Assumptions we are making: you have latest NodeJS installed, you are familiar with Git, your workstation is connected to the internet.
 
 1. Sign up or login to your Netlify account.
 2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
-3. While you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it),
-enable Identity on your app in the Netlify UI.
+3. enable Identity on your app in the Netlify UI, while you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it and redeploy).
 4. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
 5. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
-6. Link your checkout to your Netlify site with `netlify link`
-7. Create your FaunaDB database with `netlify addons:create fauna`
-8. Via the Netlify UI, trigger a redeploy.
+6. Inside your repo checkout run `npm install`
+7. Link your checkout to your Netlify site with `netlify link` and selecting the default option.
+8. Create your FaunaDB database with `netlify addons:create fauna`
+9. Via the Netlify UI, trigger a redeploy.
 
-When deploy finishes, visit your site via the link on Netlify, and sign up as a user to manage your todo lists and items.
+When deploy finishes, visit your site (you can find the link on your Netlify dashbaord), and sign up as a user to manage your todo lists and items. The application includes an `identity-signup.js` function which is triggered upon email confirmation to create the FaunaDB user. So click that confirmation link and start using your app.
 
-## Developing
+Any changes you push to your master branch will be automatically deployed.
+
+## Developing Locally
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
@@ -42,8 +44,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
-
-
 
 #### `npm test`
 
