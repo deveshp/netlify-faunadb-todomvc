@@ -12,15 +12,12 @@ Additionally, it demonstrates using Netlify's Identity service and FaunaDB add-o
 Don't skip any steps! Sometimes a deploy, or the first run of your Identity function, might take a few seconds. Don't despair, this flow is well tested and ought to just work. Assumptions we are making: you have latest NodeJS installed, you are familiar with Git, your workstation is connected to the internet.
 
 1. Sign up or login to your Netlify account.
-2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
+2. Click this button to fork and deploy this app. You can leave the FaunaDB Server Secret blank, we'll configure it using the Netlify CLI. &nbsp;&nbsp;&nbsp;<a href="https://app.netlify.com/start/deploy?repository=https://github.com/fauna/netlify-faunadb-todomvc&stack=fauna"><img src="https://www.netlify.com/img/deploy/button.svg"></a>
 3. Enable Identity on your app in the Netlify UI, while you are waiting for the first deploy to finish (it's not expected to work until we finish configuring it and redeploy).
-4. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
-5. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
-6. Link your checkout to your Netlify site with `netlify link` and selecting the default option.
-7. Create your FaunaDB database with `netlify addons:create fauna`
-8. Via the Netlify UI, trigger a redeploy.
+4. Skip a bunch of the *old instructions* (preserved at the bottom of the readme for people who like to do things by hand). Thanks to Netlify's glorious auto-provisioning for removing those steps!
+5. Via the Netlify UI, trigger a redeploy.
 
-When deploy finishes, visit your site (you can find the link on your Netlify dashbaord), and sign up as a user to manage your todo lists and items. (If you upgrade to Netlify's paid Identity service they add the option to login via Facebook, GitHub, etc.)
+When deploy finishes, visit your site (you can find the link on your Netlify dashboard), and sign up as a user to manage your todo lists and items. (If you upgrade to Netlify's paid Identity service they add the option to login via Facebook, GitHub, etc.)
 
 The application includes an `identity-signup.js` function which is triggered upon email confirmation to create the FaunaDB user. So click that confirmation link and start using your app. Any changes you push to your master branch will be automatically deployed, thanks Netlify!
 
@@ -74,3 +71,13 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+
+
+### Old instructions
+
+
+4. Install the Netlify CLI: `npm install netlify-cli -g` and `netlify login`
+5. Clone your forked repo locally: `git clone https://github.com/YOUR_GITHUB_ACCOUNT/netlify-faunadb-todomvc` and `cd netlify-faunadb-todomvc`
+6. Link your checkout to your Netlify site with `netlify link` and selecting the default option.
+7. Create your FaunaDB database with `netlify addons:create fauna`
